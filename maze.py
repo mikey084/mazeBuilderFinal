@@ -92,22 +92,33 @@ class Maze:
         self.draw_backtracked_cell(cell)
 
     # Visit cell in BFS search
-    # Update backtrack bits for use in reconstruct_solution
     def bfs_visit_cell(self, cell, from_compass_index):
-        # TODO: Logic for updating cell bits
+        self.maze_array[cell] |= (OPPOSITE_WALLS[from_compass_index] << 12)
         self.draw_bfs_visited_cell(cell)
 
     # Reconstruct path to start using backtrack bits
     def reconstruct_solution(self, cell):
         self.draw_visited_cell(cell)
-        # TODO: Logic for reconstructing solution path in BFS
+        prev_cell_bits = (self.maze_array[cell] & BACKTRACK_BITS) >> 12
+        try:
+            i = WALLS.index(prev_cell_bits)
+        except ValueError:
+            print('ERROR - BACKTRACK BITS INVALID!')
+        x, y = self.x_y(cell)
+        prev_x = x + COMPASS[i][0]
+        prev_y = y + COMPASS[i][1]
+        prev_cell = self.cell_index(prev_x, prev_y)
+        self.maze_array[prev_cell] |= (OPPOSITE_WALLS[i] << 8)
+        self.refresh_maze_view()
+        if prev_cell != 0:
+            self.reconstruct_solution(prev_cell)
 
-    # Check if x, y values of cell are within bounds of maze
+    # Check bound of maze
     def cell_in_bounds(self, x, y):
         return ((x >= 0) and (y >= 0) and (x < self.w_cells)
                 and (y < self.h_cells))
 
-    # Cell index from x, y values
+    # Cell index
     def cell_index(self, x, y):
         return y * self.w_cells + x
 
@@ -163,7 +174,7 @@ class Maze:
 
     # Process events, add each layer to screen (blip) and refresh (flip)
     # Call this at the end of each traversal step to watch the maze as it is
-    # generated. Skip call until end of creation/solution to make faster.
+    # generated.
     def refresh_maze_view(self):
         check_for_exit()
         self.screen.blit(self.background, (0, 0))
@@ -173,7 +184,7 @@ class Maze:
 
     def setup_maze_window(self):
         # Set up window and layers
-        pygame.display.set_caption('Maze Generation and Solving')
+        pygame.display.set_caption('CMPE130 Maze Runner')
         pygame.mouse.set_visible(0)
         self.background = self.background.convert()
         self.background.fill(WHITE)
@@ -182,7 +193,7 @@ class Maze:
         self.s_layer = self.s_layer.convert_alpha()
         self.s_layer.fill(NO_COLOR)
 
-        # Draw grid lines (will be whited out as walls knocked down)
+        # Draw grid lines
         for y in range(self.h_cells + 1):
             pygame.draw.line(self.m_layer, BLACK, (0, y * CELL_SIZE),
                              (SCREEN_SIZE[0], y * CELL_SIZE))
@@ -201,7 +212,6 @@ class Maze:
 
 def check_for_exit():
     # Aims for 60fps, checks for events.
-    # Without event check every frame, window will not exit!
     clock = pygame.time.Clock()
     clock.tick(60)
     for event in pygame.event.get():
