@@ -28,7 +28,6 @@ def create_dfs(m):
 
 
 
-
 def main():
     current_maze = maze.Maze('create')
     create_dfs(current_maze)
