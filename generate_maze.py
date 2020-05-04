@@ -4,7 +4,7 @@ import random
 
 # Create maze using Pre-Order DFS maze creation algorithm
 def create_dfs(m):
-    # TODO: Implement create_dfs
+
 
     stack =[]
     current = random.ramdont(0,m.total_cells -1 )
