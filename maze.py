@@ -54,7 +54,6 @@ class Maze:
     # Return cell neighbors within bounds of the maze
     # Use self.state to determine which neighbors should be included
     def cell_neighbors(self, cell):
-        def cell_neighbors(self, cell):
             x, y = self.x_y(cell)
             neighbors = []
             for i in range(4):

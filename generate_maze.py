@@ -11,12 +11,12 @@ def create_dfs(m):
     while visited < m.total_cells:
         unvisited = m.cell_neighbors(current)
         if len(unvisited) >= 1:
-            newCellIdx = random.randint(0, len(unvisited))
+            newCellIdx = random.randint(0, len(unvisited)-1)
             newCell , compassIdx = unvisited[newCellIdx]
             m.connect_cells(current, newCell, compassIdx)
             stack.append(current)
             current = newCell
-            visited = visited +1
+            visited += 1
         else:
             current = stack.pop()
         m.refresh_maze_view()
