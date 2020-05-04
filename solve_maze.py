@@ -26,6 +26,10 @@ def solve_dfs(m):
         m.refresh_maze_view()
     m.state = 'idle'
 
+def solve_bfs(m):
+    #TODO
+    pass
+
 
 def main(solver='dfs'):
     current_maze = maze.Maze('create')
