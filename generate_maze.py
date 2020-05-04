@@ -1,4 +1,3 @@
-
 import maze
 import random
 
