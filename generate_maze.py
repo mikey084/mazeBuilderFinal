@@ -4,21 +4,19 @@ import random
 
 # Create maze using Pre-Order DFS maze creation algorithm
 def create_dfs(m):
-
-
-    stack =[]
-    current = random.ramdont(0,m.total_cells -1 )
+    stack = []
+    current = random.randint(0, m.total_cells -1)
     visited = 1
 
     while visited < m.total_cells:
         unvisited = m.cell_neighbors(current)
-        if len(unvisited) >=1:
-            newCellIdx = random.randint(0 , len(unvisited))
+        if len(unvisited) >= 1:
+            newCellIdx = random.randint(0, len(unvisited))
             newCell , compassIdx = unvisited[newCellIdx]
-            m.connect_cells(current,newCell,compassIdx)
+            m.connect_cells(current, newCell, compassIdx)
             stack.append(current)
             current = newCell
-            visited =visited +1
+            visited = visited +1
         else:
             current = stack.pop()
         m.refresh_maze_view()
