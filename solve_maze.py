@@ -32,6 +32,7 @@ def main(solver='dfs'):
     generate_maze.create_dfs(current_maze)
     if solver == 'dfs':
         solve_dfs(current_maze)
+
     while 1:
         maze.check_for_exit()
     return
