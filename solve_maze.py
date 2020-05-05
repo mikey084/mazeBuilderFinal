@@ -32,8 +32,21 @@ def solve_bfs(m):
     inDirection = 0b0000
     numVisited = 0
     queue.insert(0,(current, inDirection))
-    
-    pass
+
+    while not current == len(m.maze_array) -1 and len(queue) > 0:
+        current, inDirection = queue.pop()
+        m.bfs_visit_cell(current, inDirection)
+        numVisited += 1
+        m.refresh_maze_view()
+        neighbors = m.cell_neighbors(current)
+
+        for x in neighbors:
+            queue.insert(0, x)
+
+    m.reconstruct_solution(current)
+    m.state = 'idle'
+
+
 
 '''
 
@@ -59,7 +72,8 @@ def main(solver='dfs'):
     generate_maze.create_dfs(current_maze)
     if solver == 'dfs':
         solve_dfs(current_maze)
-
+    elif solver == 'bfs':
+        solve_bfs(current_maze)
     while 1:
         maze.check_for_exit()
     return
