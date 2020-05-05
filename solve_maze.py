@@ -27,9 +27,32 @@ def solve_dfs(m):
     m.state = 'idle'
 
 def solve_bfs(m):
-    #TODO
+    queue = []
+    current = 0
+    inDirection = 0b0000
+    numVisited = 0
+    queue.insert(0,(current, inDirection))
+    
     pass
 
+'''
+
+BFS
+create queue
+set cell to 0
+set in direction for bits
+set visited to 0
+enqueue current cell
+
+while current not end and not empty
+dequeue to current cell
+visit current cell with bfs
+add 1 to visited
+call maze refresh
+
+outside while loop do something for solution path traceback method
+set state 
+'''
 
 def main(solver='dfs'):
     current_maze = maze.Maze('create')
