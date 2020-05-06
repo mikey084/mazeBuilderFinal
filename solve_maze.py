@@ -2,7 +2,7 @@ import maze
 import generate_maze
 import sys
 import random
-
+import time
 
 def solve_dfs(m):
     stack = []
@@ -67,13 +67,16 @@ outside while loop do something for solution path traceback method
 set state 
 '''
 
-def main(solver='dfs'):
+def main(solver='bfs'):
+    start_time = time.time()
     current_maze = maze.Maze('create')
     generate_maze.create_dfs(current_maze)
     if solver == 'dfs':
         solve_dfs(current_maze)
+        print(time.time() - start_time)
     elif solver == 'bfs':
         solve_bfs(current_maze)
+        print(str((time.time() - start_time)) + " Seconds")
     while 1:
         maze.check_for_exit()
     return
