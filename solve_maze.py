@@ -4,6 +4,7 @@ import sys
 import random
 import time
 
+# Method to solve the maze using DFS
 def solve_dfs(m):
     stack = []
     current = 0
@@ -26,6 +27,7 @@ def solve_dfs(m):
         m.refresh_maze_view()
     m.state = 'idle'
 
+# Method to solve the maze using BFS
 def solve_bfs(m):
     queue = []
     current = 0
@@ -47,36 +49,19 @@ def solve_bfs(m):
     m.state = 'idle'
 
 
-
-'''
-
-BFS
-create queue
-set cell to 0
-set in direction for bits
-set visited to 0
-enqueue current cell
-
-while current not end and not empty
-dequeue to current cell
-visit current cell with bfs
-add 1 to visited
-call maze refresh
-
-outside while loop do something for solution path traceback method
-set state 
-'''
-
 def main(solver='bfs'):
+    # This is to get current time for runtime below
     start_time = time.time()
     current_maze = maze.Maze('create')
     generate_maze.create_dfs(current_maze)
     if solver == 'dfs':
         solve_dfs(current_maze)
-        print(time.time() - start_time)
+        # Calculate runtime
+        print(str((time.time() - start_time)) + " seconds")
     elif solver == 'bfs':
         solve_bfs(current_maze)
-        print(str((time.time() - start_time)) + " Seconds")
+        # Calculate runtime
+        print(str((time.time() - start_time)) + " seconds")
     while 1:
         maze.check_for_exit()
     return
